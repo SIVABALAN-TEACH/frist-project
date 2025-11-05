@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>S.M. Sivabalan — Full Stack Developer Trainee</title>
+  <meta name="description" content="S.M. Sivabalan | Full Stack Developer Trainee — HTML, CSS, JavaScript, Python, MySQL." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* === Theme variables === */
+    :root{
+      --bg: #fbfdff;
+      --card: #ffffff;
+      --muted: #556170;
+      --accent: #16a085; /* change this to pick a different accent (teal) */
+      --glass: rgba(255,255,255,0.7);
+      --glass-2: rgba(255,255,255,0.9);
+      --radius: 16px;
+      --shadow: 0 8px 30px rgba(18,25,34,0.06);
+      --nav-height: 72px;
+      --max-width: 1100px;
+    }
+
+    /* === Basic reset === */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg, #ffffff 0%, #f6fbfb 40%, #eef8f7 100%);
+      color: #0f1724;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* === Layout container === */
+    .wrap{
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* === Top nav === */
+    header{
+      position: sticky;
+      top: 14px;
+      z-index: 40;
+      padding: 12px 24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.55));
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      margin: 10px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo{
+      width:48px;height:48px;border-radius:10px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+      box-shadow: 0 6px 18px rgba(22,160,133,0.09), inset 0 -3px 8px rgba(0,0,0,0.02);
+      transform: translateZ(0);
+    }
+    .logo svg{width:30px;height:30px}
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{
+      text-decoration:none;color:var(--muted);font-weight:600;padding:8px 12px;border-radius:10px;
+    }
+    nav a:hover{color:var(--accent);background:rgba(22,160,133,0.06)}
+
+    /* === Hero === */
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:28px;
+      align-items:center;
+      margin-top:28px;
+    }
+    .hero-left{
+      padding:22px;
+    }
+    .eyebrow{display:inline-block;background: linear-gradient(90deg, rgba(22,160,133,0.12), rgba(0,0,0,0)); padding:6px 10px;border-radius:999px;color:var(--accent);font-weight:700;font-size:13px}
+    h1{font-family:"Space Grotesk", Inter; font-size:40px;margin:12px 0 8px;line-height:1.02}
+    .lead{color:var(--muted);font-size:16px;max-width:68ch}
+    .cta-row{display:flex;gap:12px;margin-top:18px;align-items:center}
+    .btn{
+      border:0;padding:12px 16px;border-radius:12px;font-weight:700;cursor:pointer;
+      box-shadow: 0 8px 20px rgba(22,160,133,0.08);
+      transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .2s;
+      background: linear-gradient(90deg,var(--accent), color-mix(in srgb, var(--accent) 70%, white));
+      color:white;
+    }
+    .btn.secondary{background:transparent;color:var(--accent);border:1px solid rgba(22,160,133,0.12);box-shadow:none}
+    .btn:active{transform:translateY(1px)}
+    .hero-right{
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
+
+    /* Floating profile card */
+    .profile-card{
+      width:380px;
+      border-radius:18px;
+      padding:20px;
+      background: linear-gradient(180deg,var(--card), var(--glass-2));
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(18, 25, 34, 0.04);
+      transform: translateY(0);
+      transition: transform .6s cubic-bezier(.2,.9,.2,1);
+      position:relative;
+      overflow:hidden;
+    }
+    .profile-top{display:flex;gap:14px;align-items:center}
+    .avatar{
+      width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,var(--accent), #1abc9c);display:grid;place-items:center;color:white;font-weight:800;font-size:20px;
+      box-shadow: 0 8px 30px rgba(22,160,133,0.12);
+    }
+    .meta h3{margin:0;font-size:18px}
+    .meta p{margin:2px 0 0;color:var(--muted);font-size:13px}
+
+    /* floating shapes */
+    .float-shape{position:absolute;border-radius:50%;filter:blur(20px);opacity:.16}
+    .s1{width:220px;height:220px;right:-40px;top:-40px;background:linear-gradient(135deg,var(--accent),#2ecc71)}
+    .s2{width:120px;height:120px;left:-40px;bottom:-40px;background:linear-gradient(135deg,#ffb86b, #ffd6a5);opacity:.12}
+
+    /* sections */
+    section{margin-top:36px}
+    .section-title{display:flex;align-items:end;gap:12px;margin-bottom:16px}
+    .section-title h2{margin:0;font-size:18px}
+    .card{background:var(--card);padding:18px;border-radius:14px;box-shadow:var(--shadow);border:1px solid rgba(16,24,32,0.03)}
+
+    /* Skills */
+    .skills-grid{display:flex;gap:14px;flex-wrap:wrap}
+    .skill{
+      flex:1 1 150px;padding:12px;border-radius:12px;background:linear-gradient(180deg,var(--glass), rgba(255,255,255,0.6));
+      display:flex;flex-direction:column;gap:10px;min-width:150px
+    }
+    .skill h4{margin:0;font-size:14px}
+    .bar{height:10px;background:rgba(18,25,34,0.06);border-radius:999px;overflow:hidden}
+    .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent), #49c4a4);border-radius:inherit;transition:width 1.2s cubic-bezier(.2,.9,.2,1)}
+
+    /* Projects */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .project{
+      padding:14px;border-radius:12px;background:linear-gradient(180deg, var(--card), rgba(250,255,250,0.6));
+      transition: transform .28s ease, box-shadow .28s ease;
+      border:1px solid rgba(16,24,32,0.03);
+    }
+    .project:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(16,24,32,0.08)}
+    .project h3{margin:0 0 8px;font-size:16px}
+    .project p{margin:0;color:var(--muted);font-size:13px}
+    .tags{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:rgba(16,24,32,0.04);padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted)}
+
+    /* Experience / Education list */
+    .list{display:flex;flex-direction:column;gap:12px}
+    .list-item{display:flex;gap:14px;align-items:start}
+    .dot{width:12px;height:12px;background:var(--accent);border-radius:4px;margin-top:6px}
+
+    /* Contact form */
+    form{display:grid;gap:12px}
+    input,textarea{padding:10px;border-radius:10px;border:1px solid rgba(18,25,34,0.06);font-size:14px;background:transparent}
+    textarea{resize:vertical;min-height:110px}
+
+    /* Footer */
+    footer{margin:36px 0 80px;text-align:center;color:var(--muted);font-size:13px}
+
+    /* ===== Reveal animations ===== */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .9s ease, transform .9s cubic-bezier(.2,.9,.2,1)}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* Responsive */
+    @media (max-width:990px){
+      .hero{grid-template-columns:1fr; padding-bottom:8px}
+      .hero-right{order:-1}
+      header{margin:8px}
+    }
+    @media (max-width:460px){
+      h1{font-size:28px}
+      .profile-card{width:100%}
+    }
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    .tiny{font-size:13px;color:var(--muted)}
+    .center{display:grid;place-items:center}
+  </style>
+</head>
+<body>
+
+  <header class="wrap" role="banner" aria-label="Top navigation">
+    <a class="brand" href="#" onclick="scrollToSection('home')">
+      <div class="logo" aria-hidden="true">
+        <!-- Simple monogram -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" fill="white" opacity="0.03"/>
+          <path d="M6 17V7h3l3.5 6.5L16 7h3v10" stroke="white" stroke-opacity="0.95" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-weight:800">S.M. Sivabalan</div>
+        <div class="tiny">Full Stack Developer Trainee</div>
+      </div>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a href="#about" onclick="scrollToSection('about')">About</a>
+      <a href="#skills" onclick="scrollToSection('skills')">Skills</a>
+      <a href="#projects" onclick="scrollToSection('projects')">Projects</a>
+      <a href="#contact" onclick="scrollToSection('contact')">Contact</a>
+      <a class="btn secondary" href="#contact" onclick="scrollToSection('contact')">Hire Me</a>
+    </nav>
+  </header>
+
+  <main class="wrap" id="home">
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-left">
+        <span class="eyebrow">Full Stack • Frontend</span>
+        <h1 class="reveal">Hi, I'm <span style="color:var(--accent)">S.M. Sivabalan</span><br><small class="tiny">B.Com — Full Stack Developer Trainee</small></h1>
+        <p class="lead reveal">
+          I build modern, responsive web experiences using <strong>HTML, CSS, JavaScript</strong> and backend tools such as <strong>Python & MySQL</strong>.
+          I create accessible, animated interfaces and full-stack projects that solve real problems.
+        </p>
+
+        <div class="cta-row reveal">
+          <button class="btn" onclick="scrollToSection('projects')">View Projects</button>
+          <a class="btn secondary" href="mailto:b.siva7904@gmail.com">b.siva7904@gmail.com</a>
+        </div>
+
+        <div style="margin-top:18px" class="muted tiny reveal">
+          <strong>Certifications:</strong> FullStack Developer - Elysium Academy • PGDCA • Workshops on CSS & JavaScript frameworks.
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="profile-card reveal" aria-hidden="false">
+          <div class="float-shape s1" aria-hidden="true"></div>
+          <div class="float-shape s2" aria-hidden="true"></div>
+          <div class="profile-top">
+            <div class="avatar" aria-hidden="true">SS</div>
+            <div class="meta">
+              <h3>S.M. Sivabalan</h3>
+              <p class="tiny">Full Stack Developer Trainee — HTML, CSS, JavaScript, Python, MySQL</p>
+              <div style="margin-top:10px" class="tiny muted">Tiruvalluar Arts & Science College — B.Com (Pass out 2025)</div>
+            </div>
+          </div>
+
+          <hr style="border:none;margin:14px 0;border-top:1px solid rgba(16,24,32,0.04)">
+
+          <div style="display:flex;gap:12px;justify-content:space-between;align-items:center">
+            <div>
+              <div class="tiny muted">Location</div>
+              <div style="font-weight:700">Tirunelveli / Tamil Nadu</div>
+            </div>
+            <div style="text-align:right">
+              <div class="tiny muted">Contact</div>
+              <div style="font-weight:700">b.siva7904@gmail.com</div>
+              <a class="tiny" href="https://www.linkedin.com/in/sivabalan0011" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="reveal" tabindex="-1" aria-labelledby="about-title">
+      <div class="section-title">
+        <h2 id="about-title">About</h2>
+      </div>
+      <div class="card">
+        <p>
+          I am a dedicated and enthusiastic B.Com graduate from Tiruvalluar Arts and Science College (MS University) with a strong interest in web and full-stack development.
+          I have a solid foundation in <strong>HTML, CSS, JavaScript</strong>, responsive design, and experience building full-stack projects using <strong>Python & MySQL</strong>.
+        </p>
+
+        <div style="margin-top:12px" class="list">
+          <div class="list-item">
+            <div class="dot" aria-hidden="true"></div>
+            <div>
+              <div style="font-weight:700">School Website</div>
+              <div class="tiny muted">Designed a responsive school website using HTML/CSS/JavaScript — improved UX and accessibility across devices.</div>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <div class="dot" aria-hidden="true"></div>
+            <div>
+              <div style="font-weight:700">Growth Nest Company (Internship)</div>
+              <div class="tiny muted">Built a full-stack project using HTML/CSS/JS frontend and Python + MySQL backend to manage startup training & systems.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="reveal" aria-labelledby="skills-title">
+      <div class="section-title">
+        <h2 id="skills-title">Skills</h2>
+      </div>
+
+      <div class="card">
+        <div class="skills-grid">
+          <!-- We'll animate widths via JS -->
+          <div class="skill">
+            <h4>HTML5</h4>
+            <div class="bar" aria-hidden="true"><i data-w="95"></i></div>
+            <div class="tiny muted">Semantic markup, accessibility</div>
+          </div>
+
+          <div class="skill">
+            <h4>CSS3 (Flexbox & Grid)</h4>
+            <div class="bar" aria-hidden="true"><i data-w="92"></i></div>
+            <div class="tiny muted">Responsive layouts, animations</div>
+          </div>
+
+          <div class="skill">
+            <h4>JavaScript</h4>
+            <div class="bar" aria-hidden="true"><i data-w="86"></i></div>
+            <div class="tiny muted">DOM, fetch, micro interactions</div>
+          </div>
+
+          <div class="skill">
+            <h4>Python</h4>
+            <div class="bar" aria-hidden="true"><i data-w="78"></i></div>
+            <div class="tiny muted">Backend fundamentals</div>
+          </div>
+
+          <div class="skill">
+            <h4>MySQL</h4>
+            <div class="bar" aria-hidden="true"><i data-w="75"></i></div>
+            <div class="tiny muted">CRUD, schema design</div>
+          </div>
+
+          <div class="skill">
+            <h4>Bootstrap & jQuery</h4>
+            <div class="bar" aria-hidden="true"><i data-w="70"></i></div>
+            <div class="tiny muted">Rapid prototyping</div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:14px" class="tiny muted">Soft skills: Logical thinking, decision making, team handling, problem solving, MS Office</div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="reveal" aria-labelledby="projects-title">
+      <div class="section-title">
+        <h2 id="projects-title">Selected Projects</h2>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project reveal">
+          <h3>School Website</h3>
+          <p>Responsive website for a school with events, courses, and contact information. Built using HTML, CSS & JavaScript.</p>
+          <div class="tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <h3>Growth Nest Company Portal</h3>
+          <p>Full-stack project: frontend with HTML/CSS/JS and backend in Python with MySQL for training & startup management.</p>
+          <div class="tags">
+            <span class="tag">HTML</span><span class="tag">Python</span><span class="tag">MySQL</span>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <h3>Billing System (Demo)</h3>
+          <p>Sample billing system built during training — demonstrates invoice generation, simple DB storage and reports.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">MySQL</span><span class="tag">Bootstrap</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- EDUCATION & AWARDS -->
+    <section class="reveal" aria-labelledby="edu-title">
+      <div class="section-title">
+        <h2 id="edu-title">Education & Awards</h2>
+      </div>
+
+      <div class="card">
+        <div class="list">
+          <div class="list-item">
+            <div class="dot"></div>
+            <div>
+              <strong>B.Com — Tiruvalluar Arts & Science College (MS University)</strong>
+              <div class="tiny muted">Year of passing: 2025 • Percentage: 68%</div>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <div class="dot"></div>
+            <div>
+              <strong>Certifications & Workshops</strong>
+              <div class="tiny muted">FullStack Dev - Elysium Academy; PGDCA; CSS & JavaScript frameworks; Full Stack Workshop</div>
+            </div>
+          </div>
+
+          <div class="list-item">
+            <div class="dot"></div>
+            <div>
+              <strong>Award</strong>
+              <div class="tiny muted">Best Website Award from Elysium Academy for outstanding front-end design.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="reveal" aria-labelledby="contact-title">
+      <div class="section-title">
+        <h2 id="contact-title">Contact</h2>
+      </div>
+
+      <div class="card" style="display:grid;grid-template-columns:1fr 320px;gap:14px">
+        <div>
+          <form id="contactForm" onsubmit="handleContact(event)" novalidate>
+            <label for="name" class="tiny">Your name</label>
+            <input id="name" name="name" placeholder="Your name" required>
+
+            <label for="email" class="tiny">Email</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" required>
+
+            <label for="msg" class="tiny">Message</label>
+            <textarea id="msg" name="message" placeholder="Tell me about your project..." required></textarea>
+
+            <div style="display:flex;gap:10px;align-items:center">
+              <button class="btn" type="submit">Send Message</button>
+              <div id="cfmsg" class="tiny muted" aria-live="polite"></div>
+            </div>
+          </form>
+        </div>
+
+        <aside style="display:flex;flex-direction:column;gap:10px;justify-content:center">
+          <div class="tiny muted">Email</div>
+          <div style="font-weight:700">b.siva7904@gmail.com</div>
+
+          <div class="tiny muted" style="margin-top:8px">LinkedIn</div>
+          <a href="https://www.linkedin.com/in/sivabalan0011" target="_blank" rel="noopener">linkedin.com/in/sivabalan0011</a>
+
+          <div style="margin-top:12px" class="tiny muted">Languages</div>
+          <div>English • Tamil</div>
+        </aside>
+      </div>
+    </section>
+
+    <footer class="muted">
+      © <span id="year"></span> S.M. Sivabalan — Built with HTML, CSS & JavaScript
+    </footer>
+  </main>
+
+  <script>
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // smooth scroll helper
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+      history.replaceState(null, '', '#' + id);
+    }
+
+    // IntersectionObserver reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const ro = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          // animate skill bars when skills appear
+          if(entry.target.id === 'skills' || entry.target.querySelectorAll) {
+            const bars = entry.target.querySelectorAll('.bar > i');
+            bars.forEach((b, idx)=>{
+              const width = b.getAttribute('data-w') || 80;
+              setTimeout(()=> b.style.width = width + '%', idx*120);
+            });
+          }
+        }
+      });
+    }, {threshold:0.12});
+    reveals.forEach(r=>ro.observe(r));
+
+    // micro interaction: profile-card float on mousemove
+    const pcard = document.querySelector('.profile-card');
+    if(pcard){
+      pcard.addEventListener('mousemove', (e)=>{
+        const r = pcard.getBoundingClientRect();
+        const rx = (e.clientX - r.left) / r.width - 0.5;
+        const ry = (e.clientY - r.top) / r.height - 0.5;
+        pcard.style.transform = `translate3d(${rx*8}px, ${ry*8}px, 0)`;
+      });
+      pcard.addEventListener('mouseleave', ()=> pcard.style.transform = 'translate3d(0,0,0)');
+    }
+
+    // contact form (front-end demo)
+    function handleContact(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('msg').value.trim();
+      const cfmsg = document.getElementById('cfmsg');
+
+      if(!name || !email || !msg){
+        cfmsg.textContent = 'Please complete all fields';
+        return;
+      }
+
+      // Demo: show success and reset
+      cfmsg.textContent = 'Message ready to send (demo).';
+      e.target.reset();
+
+      // If you'd like to connect to a backend: send fetch() to your endpoint here.
+      // e.g. fetch('/api/contact', {method:'POST', body: JSON.stringify({name,email,msg})})
+    }
+
+    // small keyboard accessibility helpers: focus reveals
+    const focusables = document.querySelectorAll('a, button, input, textarea');
+    focusables.forEach(el => el.addEventListener('focus', () => el.classList.add('visible')));
+  </script>
+
+</body>
+</html>
